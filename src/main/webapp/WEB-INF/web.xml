@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.jsp</location>
+	</error-page>
+	<listener>
+		<listener-class>com.hh.usersystem.listener.SessionListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!--<servlet>
+			<servlet-name>spring</servlet-name>
+			<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+			<load-on-startup>1</load-on-startup>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>spring</servlet-name>
+			<url-pattern>/*</url-pattern>
+		</servlet-mapping>-->
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
+	<!-- <servlet> <servlet-name>JavaScriptServlet</servlet-name> <servlet-class> 
+		com.hh.system.servlet.JavaScriptServlet </servlet-class> </servlet> <servlet-mapping> 
+		<servlet-name>JavaScriptServlet</servlet-name> <url-pattern>*.javascript</url-pattern> 
+		</servlet-mapping> -->
+
+
+	<!-- <filter> <filter-name>JavaScriptServlet</filter-name> <filter-class>com.hh.system.servlet.JavaScriptServlet</filter-class> 
+		</filter> <filter-mapping> <filter-name>JavaScriptServlet</filter-name> <url-pattern>/*class*js</url-pattern> 
+		</filter-mapping> -->
+
+
+	<!-- 配置DWR前端控制器
+		<servlet>
+			<servlet-name>msgServlet</servlet-name>
+			<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class> 
+			<init-param>
+				<param-name>config</param-name>
+				<param-value>
+					/WEB-INF/classes/config/dwr.xml                
+				</param-value>
+			</init-param>-->
+	<!-- Comet Mode Begin 默认的DWR为paggyback方式，comet需要增加如下配置
+				<init-param> 
+					<param-name>activeReverseAjaxEnabled</param-name> 
+					<param-value>true</param-value> 
+				</init-param> 
+		 -->
+	<!--默认值：false描述：是指dwr的reverse ajax是使用polling和comet的方式。设置成true能增加服务器的加载能力，尽管DWR有保护服务器过载的机制。   
+		<init-param> 
+			<param-name>pollAndCometEnabled</param-name> 
+			<param-value>true</param-value> 
+		</init-param>  -->
+	<!-- Comet Mode END -->
+
+	<!-- Polling Mode BEGIN :Polling Mode 是一种轮询的方式，这可以避免长时间保持连接而产生的对服务器的占用，如果要使用轮询方式，在comet方式的基础上还要做以下配置。 -->
+	<!--<init-param>
+			<param-name>org.directwebremoting.extend.ServerLoadMonitor</param-name>
+			<param-value>org.directwebremoting.impl.PollingServerLoadMonitor</param-value>
+		</init-param> 
+		<init-param>
+			<param-name>disconnectedTime</param-name>
+			<param-value>3000</param-value>轮询周期默认为5000，5秒 
+		</init-param> -->
+	<!-- Polling Mode END-->
+	<!--
+					默认值：false 
+					描述：设置成true使DWR能够debug和进入测试页面 http://127.0.0.1:8080/wbtj201009/dwr
+
+		<init-param> 
+
+			<param-name>debug</param-name> 
+			<param-value>false</param-value> 
+		</init-param> -->
+	<!--默认值：false描述：置成true使DWR工作在Safari 1.x , 会稍微降低安全性。
+		<init-param> 
+			<param-name>allowGetForSafariButMakeForgeryEasier</param-name> 
+			<param-value>false</param-value> 
+		</init-param> -->
+	<!-- 
+				加入跨域调用配置信息 start
+				以下两个参数tomcat7下必须这样配置，否则会引起DWR CSRF Security Error(tomcat7中会出现这个错误)
+
+					默认值：true
+					描述：设置成false使能够从其他域进行请求。注意，这样做会在安全性上有点冒险，参考一下这篇文章，在没有理解这个后果前不要设置成为false。
+
+		<init-param> 
+			<param-name>crossDomainSessionSecurity</param-name> 
+			<param-value>false</param-value> 
+		</init-param> 
+		<init-param>  
+			<param-name>allowScriptTagRemoting</param-name>  
+			<param-value>true</param-value>  
+		</init-param>  -->
+	<!-- 
+			加入跨域调用配置信息 end
+		 -->
+	<!--
+					默认值：100 
+					描述：最大等待线程数量。
+
+		<init-param> 
+
+			<param-name>maxWaitingThreads</param-name> 
+			<param-value>100</param-value> 
+		</init-param> 
+		 -->
+	<!--
+						默认值：20 
+						描述：一次批量(batch)允许最大的调用数量。(帮助保护Dos攻击)
+
+			<init-param> 
+
+				<param-name>maxCallCount</param-name> 
+				<param-value>1000</param-value> 
+			</init-param>
+				<param-name>initApplicationScopeCreatorsAtStartup</param-name> 
+				<param-value>true</param-value> 
+			</init-param> 
+			<load-on-startup>2</load-on-startup>  
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>msgServlet</servlet-name>
+			<url-pattern>/msg/*</url-pattern>
+		</servlet-mapping>
+		-->
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:spring/*spring.xml</param-value>
+	</context-param>
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>
+			org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+		</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<filter-class>
+			org.springframework.orm.hibernate4.support.OpenSessionInViewFilter
+		</filter-class>
+		<init-param>
+			<param-name>sessionFactoryBeanName</param-name>
+			<param-value>sessionFactory</param-value>
+		</init-param>
+		<init-param>
+			<param-name>singleSession</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>flushMode</param-name>
+			<param-value>AUTO</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>openSessionInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+	<listener>
+		<listener-class>com.hh.system.lis.ServletContextListenerSetUp</listener-class>
+	</listener>
+</web-app>
